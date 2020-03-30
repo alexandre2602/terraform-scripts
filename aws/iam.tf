@@ -15,7 +15,7 @@
 #  * EKS Cluster
 #
 
-resource "aws_iam_role" "eks-cluster" {
+resource "aws_iam_role" "eks-cluster-service-role" {
   name = "eksServiceRole"
 
   assume_role_policy = <<POLICY
@@ -36,18 +36,18 @@ POLICY
 
 resource "aws_iam_role_policy_attachment" "eks-cluster-AmazonEKSClusterPolicy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
-  role       = aws_iam_role.eks-cluster.name
+  role       = aws_iam_role.eks-cluster-service-role.name
 }
 
 resource "aws_iam_role_policy_attachment" "eks-cluster-AmazonEKSServicePolicy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSServicePolicy"
-  role       = aws_iam_role.eks-cluster.name
+  role       = aws_iam_role.eks-cluster-service-role.name
 }
 
 
 
 ## IAM Role for Nodes
-resource "aws_iam_role" "eks-node" {
+resource "aws_iam_role" "eks-node-service-role" {
   name = "eksNodeInstanceRole"
 
   assume_role_policy = <<POLICY
@@ -70,7 +70,7 @@ POLICY
 ## Kube2IAM - allow worker to assume all roles
 resource "aws_iam_role_policy" "kube2iam_worker_policy" {
   name = "kube2iam_worker_policy"
-  role = aws_iam_role.eks-node.id
+  role = aws_iam_role.eks-node-service-role.id
 
   policy = <<EOF
 {
@@ -92,7 +92,7 @@ EOF
 ##  Allow worker nodes to send memory metrics to cloudwatch
 resource "aws_iam_role_policy" "mem_scaling_worker_policy" {
   name = "mem_scaling_worker_policy"
-  role = aws_iam_role.eks-node.id
+  role = aws_iam_role.eks-node-service-role.id
 
   policy = <<EOF
 {
@@ -115,21 +115,21 @@ EOF
 
 resource "aws_iam_role_policy_attachment" "eks-node-AmazonEKSWorkerNodePolicy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
-  role       = aws_iam_role.eks-node.name
+  role       = aws_iam_role.eks-node-service-role.name
 }
 
 resource "aws_iam_role_policy_attachment" "eks-node-AmazonEKS_CNI_Policy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
-  role       = aws_iam_role.eks-node.name
+  role       = aws_iam_role.eks-node-service-role.name
 }
 
 resource "aws_iam_role_policy_attachment" "eks-node-AmazonEC2ContainerRegistryReadOnly" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
-  role       = aws_iam_role.eks-node.name
+  role       = aws_iam_role.eks-node-service-role.name
 }
 
 resource "aws_iam_instance_profile" "eks-node" {
   name = "eks-instance-role"
-  role = aws_iam_role.eks-node.name
+  role = aws_iam_role.eks-node-service-role.name
 }
 
