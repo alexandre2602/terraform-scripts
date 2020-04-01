@@ -11,6 +11,10 @@ variable "az_count" {
   default = 3
 }
 
+variable "az_count_db" {
+  default = 2
+}
+
 variable "cluster-name" {
   default     = "eks-gudiao"
   description = "Enter eks cluster name - example like eks-demo, eks-dev etc"
@@ -31,4 +35,37 @@ variable "worker-node-instance_type" {
 variable "ssh_key_pair" {
   default = "gudiaoEKS-Keypair"
 }
+
+variable "identifier" {
+  default = "demodb-postgres"
+}
+
+variable "engine" {
+  default = "postgres"
+}
+
+variable "engine_version" {
+  default = "9.6.9"
+}
+
+variable "instance_class" {
+  default = "db.t2.micro"
+}
+
+variable "allocated_storage" {
+  default = 10
+}
+
+#storage_type      = var.storage_type
+
+variable "storage_encrypted" {
+  default = false
+}
+
+#kms_key_id        = var.kms_key_id
+#license_model     = var.license_model
+
+
+
+
 

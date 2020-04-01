@@ -27,3 +27,13 @@ resource "aws_subnet" "eks-public" {
   }
 }
 
+# resource "aws_subnet" "eks-private-db" {
+#   count             = var.az_count_db * var.az_count
+#   cidr_block        = cidrsubnet(aws_vpc.eks.cidr_block, 8, var.az_count_db + count.index)
+#   availability_zone = data.aws_availability_zones.available.names[count.index]
+#   vpc_id            = aws_vpc.eks.id
+
+#   tags = {
+#     "Name"                                      = "eks-private-subnet-db"
+#   }
+# }

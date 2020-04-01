@@ -9,7 +9,7 @@ resource "aws_security_group" "eks-sec-group-cluster" {
   }
 }
 
-resource "aws_security_group_rule" "allow_all" {
+resource "aws_security_group_rule" "allow_all_egress" {
   type              = "egress"
   from_port         = 0
   to_port           = 0
@@ -18,41 +18,50 @@ resource "aws_security_group_rule" "allow_all" {
   security_group_id = aws_security_group.eks-sec-group-cluster.id
 }
 
-resource "aws_security_group_rule" "allow_ssh" {
+resource "aws_security_group_rule" "allow_all_ingress" {
   type              = "ingress"
-  from_port         = 22
-  to_port           = 22
-  protocol          = "tcp"
+  from_port         = 0
+  to_port           = 0
+  protocol          = "-1"
   cidr_blocks       = ["0.0.0.0/0"]
   security_group_id = aws_security_group.eks-sec-group-cluster.id
 }
 
-resource "aws_security_group_rule" "allow_https" {
-  type              = "ingress"
-  from_port         = 443
-  to_port           = 443
-  protocol          = "tcp"
-  cidr_blocks       = ["0.0.0.0/0"]
-  security_group_id = aws_security_group.eks-sec-group-cluster.id
-}
+# resource "aws_security_group_rule" "allow_ssh" {
+#   type              = "ingress"
+#   from_port         = 22
+#   to_port           = 22
+#   protocol          = "tcp"
+#   cidr_blocks       = ["0.0.0.0/0"]
+#   security_group_id = aws_security_group.eks-sec-group-cluster.id
+# }
 
-resource "aws_security_group_rule" "allow_http" {
-  type              = "ingress"
-  from_port         = 80
-  to_port           = 80
-  protocol          = "tcp"
-  cidr_blocks       = ["0.0.0.0/0"]
-  security_group_id = aws_security_group.eks-sec-group-cluster.id
-}
+# resource "aws_security_group_rule" "allow_https" {
+#   type              = "ingress"
+#   from_port         = 443
+#   to_port           = 443
+#   protocol          = "tcp"
+#   cidr_blocks       = ["0.0.0.0/0"]
+#   security_group_id = aws_security_group.eks-sec-group-cluster.id
+# }
 
-resource "aws_security_group_rule" "allow_com_cluster_nodes" {
-  type              = "ingress"
-  from_port         = 65535
-  to_port           = 65535
-  protocol          = "tcp"
-  cidr_blocks       = [aws_vpc.eks.cidr_block]
-  security_group_id = aws_security_group.eks-sec-group-cluster.id
-}
+# resource "aws_security_group_rule" "allow_http" {
+#   type              = "ingress"
+#   from_port         = 80
+#   to_port           = 80
+#   protocol          = "tcp"
+#   cidr_blocks       = ["0.0.0.0/0"]
+#   security_group_id = aws_security_group.eks-sec-group-cluster.id
+# }
+
+# resource "aws_security_group_rule" "allow_com_cluster_nodes" {
+#   type              = "ingress"
+#   from_port         = 0
+#   to_port           = 65535
+#   protocol          = "tcp"
+#   cidr_blocks       = ["0.0.0.0/0"]
+#   security_group_id = aws_security_group.eks-sec-group-cluster.id
+# }
 
 ## Crate EKS Nodes security group
 resource "aws_security_group" "eks-sec-group-nodes" {
@@ -66,7 +75,7 @@ resource "aws_security_group" "eks-sec-group-nodes" {
   }
 }
 
-resource "aws_security_group_rule" "allow_all_nodes" {
+resource "aws_security_group_rule" "allow_all_nodes_egress" {
   type              = "egress"
   from_port         = 0
   to_port           = 0
@@ -75,11 +84,29 @@ resource "aws_security_group_rule" "allow_all_nodes" {
   security_group_id = aws_security_group.eks-sec-group-nodes.id
 }
 
-resource "aws_security_group_rule" "allow_ssh_nodes" {
+resource "aws_security_group_rule" "allow_all_nodes_ingress" {
   type              = "ingress"
-  from_port         = 22
-  to_port           = 22
-  protocol          = "tcp"
+  from_port         = 0
+  to_port           = 0
+  protocol          = "-1"
   cidr_blocks       = ["0.0.0.0/0"]
   security_group_id = aws_security_group.eks-sec-group-nodes.id
 }
+
+# resource "aws_security_group_rule" "allow_ssh_nodes" {
+#   type              = "ingress"
+#   from_port         = 22
+#   to_port           = 22
+#   protocol          = "tcp"
+#   cidr_blocks       = ["0.0.0.0/0"]
+#   security_group_id = aws_security_group.eks-sec-group-nodes.id
+# }
+
+# resource "aws_security_group_rule" "allow_com_nodes_cluster" {
+#   type              = "ingress"
+#   from_port         = 0
+#   to_port           = 65535
+#   protocol          = "tcp"
+#   cidr_blocks       = ["0.0.0.0/0"]
+#   security_group_id = aws_security_group.eks-sec-group-nodes.id
+# }
