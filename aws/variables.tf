@@ -2,15 +2,15 @@ variable "region" {
   default = "us-east-1"
 }
 
-variable "vpc_cidr_block" {
-  description = "Range of IPv4 address for the VPC"
-  default     = "10.0.0.0/16"
-}
-
 variable "tag_default_name" {
   default = "gudiaoLabs"
 }
 
+#Variables VPC - Network
+variable "vpc_cidr_block" {
+  description = "Range of IPv4 address for the VPC"
+  default     = "10.0.0.0/16"
+}
 
 variable "az_count" {
   default = 2
@@ -20,6 +20,7 @@ variable "az_fator_mult" {
   default = 2
 }
 
+# Variables EKS
 variable "eks-cluster-name" {
   default     = "eks-gudiao-local"
   description = "Enter eks cluster name - example like eks-demo, eks-dev etc"
@@ -41,8 +42,9 @@ variable "ssh_key_pair" {
   default = "gudiaoEKS-Keypair"
 }
 
+# Variables RDS Service
 variable "identifier" {
-  default = "demodb-postgres"
+  default = "${var.tag_default_name}-postgres"
 }
 
 variable "engine" {
@@ -61,15 +63,37 @@ variable "allocated_storage" {
   default = 10
 }
 
-#storage_type      = var.storage_type
+variable "storage_type" {
+  default = "gp2"
+}
 
 variable "storage_encrypted" {
   default = false
 }
 
-#kms_key_id        = var.kms_key_id
-#license_model     = var.license_model
+variable "name" {
+  default = "gudiaoLabs-database"
+}
 
+variable "username" {
+  default = "gudiao"
+}
+
+variable "password" {
+  default = "gudi@o&123"
+}
+
+variable "port" {
+  default = 5432
+}
+
+variable "multi_az" {
+  default = "false"
+}
+
+variable "deletion_protection" {
+  default = false
+}
 
 
 

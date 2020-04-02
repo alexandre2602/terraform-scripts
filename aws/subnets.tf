@@ -42,4 +42,3 @@ resource "aws_subnet" "subnet-db-private" {
 
 
 
-
