@@ -52,7 +52,7 @@ variable "engine" {
 }
 
 variable "engine_version" {
-  default = "9.6.9"
+  default = "11.5"
 }
 
 variable "instance_class" {
