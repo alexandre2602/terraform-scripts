@@ -4,7 +4,7 @@ resource "aws_vpc" "eks" {
   enable_dns_support = false
 
   tags = {
-    "Name"                                      = "eks-vpc"
-    "kubernetes.io/cluster/${var.cluster-name}" = "shared"
+    "Name"                                      = "${var.tag_default_name}-vpc"
+    "kubernetes.io/cluster/${var.eks-cluster-name}" = "shared"
   }
 }

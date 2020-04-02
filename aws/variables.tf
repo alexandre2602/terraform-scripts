@@ -7,16 +7,21 @@ variable "vpc_cidr_block" {
   default     = "10.0.0.0/16"
 }
 
-variable "az_count" {
-  default = 3
+variable "tag_default_name" {
+  default = "gudiaoLabs"
 }
 
-variable "az_count_db" {
+
+variable "az_count" {
   default = 2
 }
 
-variable "cluster-name" {
-  default     = "eks-gudiao"
+variable "az_fator_mult" {
+  default = 2
+}
+
+variable "eks-cluster-name" {
+  default     = "eks-gudiao-local"
   description = "Enter eks cluster name - example like eks-demo, eks-dev etc"
 }
 
