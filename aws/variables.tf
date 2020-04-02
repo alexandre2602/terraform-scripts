@@ -44,7 +44,7 @@ variable "ssh_key_pair" {
 
 # Variables RDS Service
 variable "identifier" {
-  default = "${var.tag_default_name}-postgres"
+  default = "gudiao-labs-postgres"
 }
 
 variable "engine" {
@@ -71,8 +71,8 @@ variable "storage_encrypted" {
   default = false
 }
 
-variable "name" {
-  default = "gudiaoLabs-database"
+variable "db-name" {
+  default = "gudiaolabsdatabase"
 }
 
 variable "username" {
@@ -80,7 +80,7 @@ variable "username" {
 }
 
 variable "password" {
-  default = "gudi@o&123"
+  default = "gudiao123"
 }
 
 variable "port" {
@@ -93,6 +93,10 @@ variable "multi_az" {
 
 variable "deletion_protection" {
   default = false
+}
+
+variable "timeouts" {
+  default = "5m"
 }
 
 
